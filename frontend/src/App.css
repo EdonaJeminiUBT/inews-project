@@ -1,0 +1,43 @@
+
+a {
+  text-decoration: none;
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.body-content {
+  flex: 1;
+}
+
+.footer {
+  background-color: #231f20;
+  color: white;
+  text-align: center;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  margin-top: auto;
+}
+
+.footer .footer-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer .footer-content h2 {
+  font-size: 1.2rem;
+}
+
+.footer .footer-content p {
+  margin: 5px 0;
+}
+
+.footer .footer-bottom {
+  margin-top: 20px;
+  font-size: 0.8rem;
+}
