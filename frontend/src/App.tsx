@@ -16,9 +16,11 @@ import { Profile } from "./pages/Profile";
 import { Footer } from "./components/Footer";
 import { SignUpPage } from "./pages/SignUpPage";
 
+
 function App() {
   const location = useLocation();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+
 
   useEffect(() => {
     const token = localStorage.getItem('token');

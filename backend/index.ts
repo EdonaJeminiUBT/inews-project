@@ -1,9 +1,10 @@
-import express, { Request, Response } from 'express';
+import express, { NextFunction, Request, Response } from 'express';
 import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
+import jwt, { JwtPayload } from 'jsonwebtoken';
 import { connection, connectMySQL } from './db/mysql';
 import { SignInData, SignUpData } from './types';
 import cors from 'cors'; 
+import { RowDataPacket } from 'mysql2';
 
 const app = express();
 
@@ -11,6 +12,45 @@ app.use(express.json());
 app.use(cors());
 
 connectMySQL();
+
+interface AuthenticatedRequest extends Request {
+  userId?: number;
+}
+
+export function authenticateJWT(req: AuthenticatedRequest, res: Response, next: NextFunction) {
+  const token = req.headers.authorization?.split(' ')[1]; // Extract token from Authorization header
+  if (token) {
+    jwt.verify(token, 'secret', (err, decoded: JwtPayload | undefined) => {
+      if (err) {
+        return res.status(403).send('Unauthorized');
+      }
+      if (!decoded?.userId) {
+        return res.status(403).send('Unauthorized');
+      }
+      req.userId = decoded.userId as number;
+      next();
+    });
+  } else {
+    res.status(401).send('Unauthorized');
+  }
+}
+
+app.get('/users/:userId', async (req: Request, res: Response) => {
+  try {
+    const userId = req.params.userId;
+
+    const [rows]: [RowDataPacket[], unknown] = await connection.query('SELECT * FROM users WHERE id = ?', [userId]);
+    if (rows.length === 0) {
+      return res.status(404).send('User not found');
+    }
+
+    res.send(rows[0]);
+  } catch (error) {
+    console.error('Error fetching user by ID:', error);
+    res.status(500).send('Internal server error');
+  }
+});
+
 
 app.post('/signup', async (req: Request, res: Response) => {
   const { email, password, name } = req.body as SignUpData;
@@ -49,13 +89,31 @@ app.post('/signin', async (req: Request, res: Response) => {
     }
 
     const token = jwt.sign({ userId: user.id }, 'secret', { expiresIn: '1h' });
-
     res.send({ token });
   } catch (error) {
     console.error('Error signing in:', error);
     res.status(500).send('Internal server error');
   }
 });
+
+app.get('/user-details', authenticateJWT, async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const userId = req.userId;
+    const [rows] = await connection.query('SELECT name, email FROM users WHERE id = ?', [userId]);
+    const user = rows[0];
+
+    if (!user) {
+      return res.status(404).send('User not found');
+    }
+
+    res.send({ username: user.name, email: user.email });
+  } catch (error) {
+    console.error('Error fetching user details:', error);
+    res.status(500).send('Internal server error');
+  }
+});
+
+
 
 
 const PORT = process.env.PORT || 3500;
