@@ -49,8 +49,8 @@ function App() {
         <Route path="/post" element={<PostNews />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/signup" element={<SignUpPage />} />
-        <Route path="/news-detail/:id" element={<NewsDetails />} />
-      </Routes>
+        <Route path="/news/:id" element={<NewsDetails />} />
+              </Routes>
       <Footer />
     </div>
   );

@@ -16,19 +16,17 @@ export type User = {
   news: [];
   comments: [];
 };
-export type News = {
+export interface News {
   id: number;
-  title: String;
-  intro: String;
-  image: String;
-  video?: String;
-  createdAt: string;
-  category: string;
-  content: String;
-  liked: boolean;
-  userId: number;
-  comments: [];
-};
+  title: string;
+  description: string;
+  image_url: string;
+  category: 'movies' | 'celebrities' | 'books' | 'general' | 'politics' | 'social_media' | 'weather';
+  user_id: number;
+  created_at: string;
+  userName: string; 
+}
+
 
 export type Comments = {
   id: number;

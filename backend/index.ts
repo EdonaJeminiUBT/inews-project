@@ -18,7 +18,7 @@ interface AuthenticatedRequest extends Request {
 }
 
 export function authenticateJWT(req: AuthenticatedRequest, res: Response, next: NextFunction) {
-  const token = req.headers.authorization?.split(' ')[1]; // Extract token from Authorization header
+  const token = req.headers.authorization?.split(' ')[1]; 
   if (token) {
     jwt.verify(token, 'secret', (err, decoded: JwtPayload | undefined) => {
       if (err) {
@@ -113,6 +113,46 @@ app.get('/user-details', authenticateJWT, async (req: AuthenticatedRequest, res:
   }
 });
 
+app.post('/post', authenticateJWT, async (req: AuthenticatedRequest, res: Response) => {
+  const { title, description, imageUrl, category } = req.body;
+  const userId = req.userId;
+
+  try {
+    await connection.query('INSERT INTO news (title, description, image_url, user_id, category, created_at) VALUES (?, ?, ?, ?, ?, CURRENT_TIMESTAMP)', [title, description, imageUrl, userId, category]);
+    
+    res.status(201).send('News created successfully');
+  } catch (error) {
+    console.error('Error creating news:', error);
+    res.status(500).send('Internal server error');
+  }
+});
+
+
+app.get('/news', async (req: Request, res: Response) => {
+  try {
+    const [rows] = await connection.query('SELECT news.*, users.name AS userName FROM news INNER JOIN users ON news.user_id = users.id');
+    res.status(200).json(rows);
+  } catch (error) {
+    console.error('Error fetching news:', error);
+    res.status(500).send('Internal server error');
+  }
+});
+
+app.get('/news/:id', async (req: Request, res: Response) => {
+  const newsId = req.params.id;
+
+  try {
+    const [rows]: [RowDataPacket[], unknown] = await connection.query('SELECT news.*, users.name AS userName FROM news INNER JOIN users ON news.user_id = users.id WHERE news.id = ?', [newsId]);
+    if (rows.length === 0) {
+      return res.status(404).send('News not found');
+    }
+
+    res.status(200).json(rows[0]);
+  } catch (error) {
+    console.error('Error fetching news by ID:', error);
+    res.status(500).send('Internal server error');
+  }
+});
 
 
 
