@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './SignInPage.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 interface SignInData {
   email: string;
@@ -12,44 +12,44 @@ export const SignInPage: React.FC = () => {
     email: '',
     password: '',
   });
+  const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate(); 
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await fetch('/signin', {
+      const response = await fetch('http://localhost:3500/signin', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(formData),
       });
-
-      if (!response.ok) {
-        throw new Error('Invalid email or password');
-      }
-
-      const { token } = await response.json();
-      // Store token in local storage or state for future use
-      console.log('Token:', token);
-    } catch (error) {
-      console.error('Error signing in:', error);
-      if (error instanceof Error) {
-        console.error('Error message:', error.message);
+  
+      if (response.ok) {
+        const { token } = await response.json();
+        localStorage.setItem('token', token);
+        navigate('/homepage');
       } else {
-        console.error('Unknown error occurred');
+        const errorMessage = await response.text(); 
+        throw new Error(errorMessage);
       }
-      // Handle error, display message to user, etc.
+    } catch (error:any) {
+      console.error('Error signing in:', error);
+      setError(error.message);
     }
   };
+  
+  
 
   return (
     <div className="container">
       <h2 className="title">Sign In</h2>
+      {error && <p className="error-message">{error}</p>}
       <form className="form" onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="email" className="label">Email:</label>
