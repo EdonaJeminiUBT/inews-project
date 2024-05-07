@@ -14,7 +14,7 @@ export const SignUpPage: React.FC = () => {
     name: '',
   });
   const navigate = useNavigate()
-  const [error, setError] = useState<string>('');
+  const [error, setError] = useState<string | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -41,12 +41,13 @@ export const SignUpPage: React.FC = () => {
         }
       }
   
-      navigate('/homepage');
+      navigate('/signin'); 
       console.log('User created successfully');
     } catch (error: any) {
-      setError(error.toString());
+      setError(error.message);
     }
   };
+  
   
   return (
     <div className="signup-container">
