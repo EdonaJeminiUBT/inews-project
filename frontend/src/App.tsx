@@ -1,5 +1,5 @@
-import { Navigate, Route, Routes } from "react-router-dom";
-
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
 import "./App.css";
 import { SignInPage } from "./pages/SignInPage";
 import { HomePage } from "./pages/HomePage";
@@ -17,32 +17,39 @@ import { Footer } from "./components/Footer";
 import { SignUpPage } from "./pages/SignUpPage";
 
 function App() {
+  const location = useLocation();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      setIsAuthenticated(true);
+    } else {
+      setIsAuthenticated(false);
+    }
+  }, [location]);
+
+;
+
   return (
     <div className="App">
-      <Navbar />
+      <Navbar isAuthenticated={isAuthenticated} />
       <Routes>
-        <Route index element={<Navigate to="/homepage" />} />
-        <Route path="/homepage" element={<HomePage/>} />
-        <Route path="/signin" element={<SignInPage/>} />
+      <Route path="*" element={<Navigate to="/signin" />} />
+        <Route path="/homepage" element={<HomePage />} />
+        <Route path="/signin" element={<SignInPage />} />
         <Route path="/general" element={<General />} />
         <Route path="/politics" element={<Politics />} />
         <Route path="/socialmedia" element={<Socialmedia />} />
         <Route path="/books" element={<Books />} />
-        <Route path="/movies" element={<Movies/>} />
+        <Route path="/movies" element={<Movies />} />
         <Route path="/celebrity" element={<Celebrity />} />
         <Route path="/post" element={<PostNews />} />
-         <Route path="/profile" element={<Profile />} />
-        <Route
-          path="/signup"
-          element={<SignUpPage />}
-        />
-        <Route
-          path="/news-detail/:id"
-          element={
-            <NewsDetails />}/>
-
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/signup" element={<SignUpPage />} />
+        <Route path="/news-detail/:id" element={<NewsDetails />} />
       </Routes>
-      <Footer/>
+      <Footer />
     </div>
   );
 }
