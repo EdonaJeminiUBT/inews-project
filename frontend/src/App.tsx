@@ -15,6 +15,7 @@ import { PostNews } from "./pages/PostNews";
 import { Profile } from "./pages/Profile";
 import { Footer } from "./components/Footer";
 import { SignUpPage } from "./pages/SignUpPage";
+import { EditNews } from "./pages/EditNews";
 
 
 function App() {
@@ -48,6 +49,7 @@ function App() {
         <Route path="/celebrity" element={<Celebrity />} />
         <Route path="/post" element={<PostNews />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/edit/:id" element={<EditNews />} />
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/news/:id" element={<NewsDetails />} />
               </Routes>

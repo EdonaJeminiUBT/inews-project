@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { News } from '../types';
-
+import "./NewsDetails.css"
 export function NewsDetails() {
   const { id } = useParams<{ id: string }>();
   const [news, setNews] = useState<News | null>(null);
@@ -33,7 +33,6 @@ export function NewsDetails() {
       <h2>{news.title}</h2>
       <p>{news.description}</p>
       <p>Category: {news.category}</p>
-      <p>Created: {news.created_at}</p>
       <p>Author: {news.userName}</p>
       <img src={news.image_url} alt="News" />
     </div>
