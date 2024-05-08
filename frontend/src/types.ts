@@ -16,7 +16,7 @@ export type User = {
   news: [];
   comments: [];
 };
-export interface News {
+export type News = {
   id: number;
   title: string;
   description: string;

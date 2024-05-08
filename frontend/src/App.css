@@ -41,3 +41,11 @@ a {
   margin-top: 20px;
   font-size: 0.8rem;
 }
+
+.category-news {
+  font-size: 64px;
+  text-align: center;
+  color: #333;
+  font-family: 'Brush Script MT', cursive;
+  font-weight: 150;
+}
