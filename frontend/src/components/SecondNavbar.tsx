@@ -12,6 +12,9 @@ export function SecondNavbar() {
             <NavLink className="second-nav-link" to={"/homepage"}>Home</NavLink>
           </li>
           <li>
+            <NavLink className="second-nav-link" to={"/weather"}>Weather</NavLink>
+          </li>
+          <li>
             <NavLink className="second-nav-link" to={"/general"}>General</NavLink>
           </li>
           <li>

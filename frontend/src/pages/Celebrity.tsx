@@ -19,7 +19,7 @@ export function Celebrity() {
       if (response.ok) {
         const data: News[] = await response.json();
         setNews(data);
-        setFilteredNews(data.filter(newsItem => newsItem.category === "celebrities")); 
+        setFilteredNews(data.filter(newsItem => newsItem.category === "celebrities"));
       } else {
         throw new Error("Failed to fetch news");
       }
@@ -34,18 +34,19 @@ export function Celebrity() {
       <div className="NewsContainer">
         <h2 className="category-news">Celebrity News</h2>
         <ul>
-          {filteredNews.map((newsItem) => (
-            <li key={newsItem.id} className="NewsItem">
-              <Link to={`/news/${newsItem.id}`} className="NewsItemLink">
-                <div className="NewsItemContent">
-                  <h3 className="NewsItemTitle">{newsItem.title}</h3>
-                  <p className="NewsItemCreatedAt">{timeElapsed(newsItem.created_at)}</p>
-                  <p className="NewsItemUserName">By: {newsItem.userName} INEWS</p> 
-                  <img src={newsItem.image_url} alt="News" className="NewsItemImage" />
-                </div>
-              </Link>
-            </li>
-          ))}
+          {filteredNews.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
+            .map((newsItem) => (
+              <li key={newsItem.id} className="NewsItem">
+                <Link to={`/news/${newsItem.id}`} className="NewsItemLink">
+                  <div className="NewsItemContent">
+                    <h3 className="NewsItemTitle">{newsItem.title}</h3>
+                    <p className="NewsItemCreatedAt">{timeElapsed(newsItem.created_at)}</p>
+                    <p className="NewsItemUserName">By: {newsItem.userName} INEWS</p>
+                    <img src={newsItem.image_url} alt="News" className="NewsItemImage" />
+                  </div>
+                </Link>
+              </li>
+            ))}
         </ul>
       </div>
     </div>

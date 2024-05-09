@@ -54,7 +54,11 @@ export function PostNews() {
         setSuccessMessage('News created successfully!');
         setTimeout(() => {
           setSuccessMessage(null);
-          navigate('/homepage');
+          if (formData.category === 'weather') {
+            navigate('/weather');
+          } else {
+            navigate('/homepage');
+          }
         }, 1000);
       } else {
         throw new Error('Failed to create news');
