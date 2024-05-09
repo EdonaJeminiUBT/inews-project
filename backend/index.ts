@@ -5,6 +5,8 @@ import { connection, connectMySQL } from './db/mysql';
 import { SignInData, SignUpData } from './types';
 import cors from 'cors'; 
 import { RowDataPacket } from 'mysql2';
+import axios from 'axios';
+import { client, connectMongo } from './db/mongo'; 
 
 const app = express();
 
@@ -12,6 +14,8 @@ app.use(express.json());
 app.use(cors());
 
 connectMySQL();
+connectMongo();
+
 
 interface AuthenticatedRequest extends Request {
   userId?: number;
@@ -204,9 +208,80 @@ app.delete('/news/:id', authenticateJWT, async (req: AuthenticatedRequest, res: 
     res.status(500).send('Internal server error');
   }
 });
+app.post('/weather', async (req, res) => {
+  const { city, country, userEmail } = req.body; 
+
+  try {
+    const apiKey = '3002c2a1e57b545d8862dbd2bf06f635';
+    const response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city},${country}&appid=${apiKey}`);
+    const weatherData = response.data;
+    const currentTime = new Date();
+
+    const [rows] = await connection.query('SELECT id, name FROM users WHERE email = ?', [userEmail]);
+    const userId = rows[0]?.id || null; 
+    const userName = rows[0]?.name || 'Unknown'; 
+
+    await client.connect();
+    const db = client.db('weatherApp');
+    const collection = db.collection('weather');
+    await collection.insertOne({
+      city,
+      country,
+      weatherData,
+      category: 'weather',
+      created_at: currentTime,
+      userId: userId,
+      userName: userName 
+    });
+    res.status(200).send('Weather data saved successfully');
+  } catch (error) {
+    console.error('Error fetching or storing weather data:', error);
+    res.status(500).send('Internal server error');
+  }
+});
 
 
 
+
+app.get('/weather-news', async (req, res) => {
+  try {
+    await client.connect();
+    const db = client.db('weatherApp');
+    const collection = db.collection('weather');
+
+    if (!collection) {
+      throw new Error('Weather collection not found');
+    }
+
+    const weatherNews = await collection.find({ category: 'weather' }).toArray();
+
+    res.status(200).json(weatherNews);
+  } catch (error) {
+    console.error('Error fetching weather news:', error);
+    res.status(500).send('Internal server error');
+  }
+});
+
+app.get('/user-weather-news', authenticateJWT, async (req: AuthenticatedRequest, res: Response) => {
+  const userId = req.userId;
+
+  try {
+    await client.connect();
+    const db = client.db('weatherApp');
+    const collection = db.collection('weather');
+
+    if (!collection) {
+      throw new Error('Weather collection not found');
+    }
+
+    const weatherUserNews = await collection.find({ category: 'weather', user_id: userId }).toArray();
+
+    res.status(200).json(weatherUserNews);
+  } catch (error) {
+    console.error('Error fetching user weather news:', error);
+    res.status(500).send('Internal server error');
+  }
+});
 
 
 const PORT = process.env.PORT || 3500;

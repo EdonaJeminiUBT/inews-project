@@ -7,7 +7,7 @@ import { convertKelvinToCelsius, timeElapsed } from "../functions";
 import { Link } from "react-router-dom";
 import weather from '../assets/weather.webp'
 
-export function HomePage() {
+export function Weather() {
   const [news, setNews] = useState<News[]>([]);
   const [weatherData, setWeatherData] = useState<any[]>([]); 
   const [filteredNews, setFilteredNews] = useState<any[]>([]);
@@ -48,15 +48,23 @@ export function HomePage() {
   
   const handleSearch = (query: string) => {
     if (query.trim() === '') {
-      setFilteredNews([...news]);
+      setFilteredNews([...news, ...weatherData]);
     } else {
-      const filteredNews = news.filter((newsItem) =>
-        newsItem.title?.toLowerCase().includes(query.toLowerCase())
-      );
-      
-      setFilteredNews(filteredNews);
+      const filteredData = [...news, ...weatherData].filter((item) => {
+        return (
+          item.title?.toLowerCase().includes(query.toLowerCase()) ||
+          (item.weatherData &&
+            [item.weatherData.city, item.weatherData.country, item.weatherData.description]
+              .join(' ')
+              .toLowerCase()
+              .includes(query.toLowerCase()))
+        );
+      });
+  
+      setFilteredNews(filteredData);
     }
   };
+  
   
 
   return (
@@ -66,7 +74,7 @@ export function HomePage() {
       <div className="NewsContainer">
         <h2 className="latest-news">Latest News</h2>
         <ul>
-          {[...filteredNews, ...weatherData]
+          {filteredNews
             .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()) 
             .map((item, index) => (
               <li key={index} className={`NewsItem ${item.category === 'weather' ? 'WeatherItem' : ''}`}>

@@ -1,7 +1,7 @@
 .news-posting {
   display: grid;
   grid-auto-flow: column;
-  justify-content: space-around;
+  justify-content: s;
   align-items: center;
   min-height: calc(100vh - 120px);
   padding: 20px;

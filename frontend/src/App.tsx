@@ -16,6 +16,7 @@ import { Profile } from "./pages/Profile";
 import { Footer } from "./components/Footer";
 import { SignUpPage } from "./pages/SignUpPage";
 import { EditNews } from "./pages/EditNews";
+import { Weather } from "./pages/Weather";
 
 
 function App() {
@@ -41,6 +42,7 @@ function App() {
       <Route path="*" element={<Navigate to="/signin" />} />
         <Route path="/homepage" element={<HomePage />} />
         <Route path="/signin" element={<SignInPage />} />
+        <Route path="/weather" element={<Weather />} />
         <Route path="/general" element={<General />} />
         <Route path="/politics" element={<Politics />} />
         <Route path="/socialmedia" element={<Socialmedia />} />
