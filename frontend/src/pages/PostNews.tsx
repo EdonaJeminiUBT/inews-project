@@ -2,6 +2,7 @@ import { useState, FormEvent, ChangeEvent } from 'react';
 import './PostNews.css';
 import { useNavigate } from 'react-router-dom';
 import figure from '../assets/figure.webp';
+import { CiSignpostR1 } from 'react-icons/ci';
 
 export function PostNews() {
   const [formData, setFormData] = useState({
@@ -143,7 +144,7 @@ export function PostNews() {
           </div>
         )}
         <button type="submit" className="review-btn">
-          POST
+        <CiSignpostR1 />
         </button>
       </form>
       <div className="image-container">

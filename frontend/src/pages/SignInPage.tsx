@@ -47,16 +47,17 @@ export const SignInPage: React.FC = () => {
   
 
   return (
+    <div className='signin-page'>
     <div className="container">
       <h2 className="title">Sign In</h2>
       {error && <p className="error-message">{error}</p>}
       <form className="form" onSubmit={handleSubmit}>
         <div className="form-group">
-          <label htmlFor="email" className="label">Email:</label>
           <input
             type="email"
             id="email"
             name="email"
+            placeholder='Email'
             value={formData.email}
             onChange={handleChange}
             className="input"
@@ -64,11 +65,11 @@ export const SignInPage: React.FC = () => {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="password" className="label">Password:</label>
           <input
             type="password"
             id="password"
             name="password"
+            placeholder='Password'
             value={formData.password}
             onChange={handleChange}
             className="input"
@@ -79,5 +80,6 @@ export const SignInPage: React.FC = () => {
         <p className="signup-link">Don't have an account? <Link to="/signup">Sign up here</Link></p>
       </form>
     </div>
+    </div> 
   );
 };

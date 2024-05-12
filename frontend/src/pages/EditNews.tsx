@@ -2,6 +2,7 @@ import { FormEvent, useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import figure from '../assets/figure.webp';
 import './PostNews.css';
+import { CiSignpostR1 } from 'react-icons/ci';
 
 export function EditNews() {
   const { id } = useParams();
@@ -116,7 +117,8 @@ export function EditNews() {
           <option value="weather">Weather</option>
         </select>
         <button type="submit" className="review-btn">
-          UPDATE
+        <CiSignpostR1 />
+
         </button>
       </form>
       <div className="image-container">
