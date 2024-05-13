@@ -14,7 +14,6 @@ export type User = {
   password: string;
   name: string;
   news: [];
-  comments: [];
 };
 export type News = {
   id: number;
@@ -26,11 +25,3 @@ export type News = {
   created_at: string;
   userName: string; 
 }
-
-
-export type Comments = {
-  id: number;
-  newsId: number;
-  userId: number;
-  content: string;
-};

@@ -3,6 +3,7 @@ import { FaFacebook, FaInstagram, FaTelegramPlane } from "react-icons/fa";
 export function Footer() {
   return (
     <footer className="footer">
+      <div className="footer-container">
       <div className="footer-content">
         <div className="footer-contact">
           <h2>Contact Us</h2>
@@ -12,10 +13,11 @@ export function Footer() {
       </div>
       <div className="social-media">
         <ul>
-          <li><FaFacebook /></li>
-          <li><FaInstagram /></li>
-          <li><FaTelegramPlane /></li>
+          <li><a href="www.facebook.com"><FaFacebook /></a></li>
+          <li><a href="www.instagram.com"><FaInstagram /></a></li>
+          <li><a href="www.telegram.com"><FaTelegramPlane /></a></li>
           </ul>
+      </div>
       </div>
       <div className="footer-bottom">
         <p>&copy; 2024 INews. All rights reserved.</p>

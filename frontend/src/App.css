@@ -13,6 +13,11 @@ a {
   flex: 1;
 }
 
+.footer-container{
+  display: grid;
+  grid-auto-flow: column;
+}
+
 .footer {
   background-color: #231f20;
   color: white;
@@ -55,7 +60,12 @@ a {
   text-decoration: none;
   list-style: none;
   gap: 10px;
+  padding-top: 40px;
 }
 .social-media li{
   font-size: 26px;
+}
+
+.social-media a{
+  color: white;
 }

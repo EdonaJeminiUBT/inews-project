@@ -60,6 +60,7 @@ export function HomePage() {
                       <p className="NewsItemCreatedAt">{timeElapsed(item.created_at)}</p>
                       <p className="NewsItemUserName">By: {item.userName} INEWS</p> 
                       <img src={item.image_url} alt="News" className="NewsItemImage" />
+                      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit tenetur et, dolorum quasi ab debitis fugiat? Suscipit doloremque dolorem labore...</p>
                     </div>
                   </Link>
               </li>
