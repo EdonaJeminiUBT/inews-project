@@ -1,0 +1,63 @@
+.navbar {
+    background-color: #333;
+    color: white;
+  }
+  
+  .navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+  }
+  
+  .navbar-logo {
+    color: white;
+    text-decoration: none;
+    font-size: 1.5rem;
+  }
+  
+  .navbar-items {
+    display: flex;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .navbar-item {
+    margin-right: 20px;
+  }
+  
+  .navbar-item:last-child {
+    margin-right: 0;
+  }
+  
+  .navbar-item a {
+    color: white;
+    text-decoration: none;
+  }
+  
+  .navbar-item a:hover {
+    color: lightgray;
+  }
+  
+  .navbar-item .active {
+    font-weight: bold;
+  }
+  
+  .navbar-item .react-icon {
+    font-size: 1.2rem;
+    margin-right: 5px;
+  }
+  
+  .signin-btn {
+    background-color: transparent;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: inherit;
+  }
+  
+  .signin-btn:hover {
+    color: lightgray;
+  }
+  
