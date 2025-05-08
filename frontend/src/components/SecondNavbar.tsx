@@ -1,31 +1,33 @@
 import "./SecondNavbar.css"
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 export function SecondNavbar() {
   return (
     <nav className="second-navbar">
+
+      <div className="categories-header">Choose your favorite category</div>
       <ul className="categories">
-        <li>
-          <div className="categories-header">Choose your favorite category</div>
-        </li>
         <ul className="categories-items">
-          <li>
-            <Link className="second-nav-link" to={"/general"}>General</Link>
+        <li>
+            <NavLink className="second-nav-link" to={"/homepage"}>Home</NavLink>
           </li>
           <li>
-            <Link className="second-nav-link" to={"/politics"}>Politics</Link>
+            <NavLink className="second-nav-link" to={"/general"}>General</NavLink>
           </li>
           <li>
-            <Link className="second-nav-link" to={"/movies"}>Movies</Link>
+            <NavLink className="second-nav-link" to={"/politics"}>Politics</NavLink>
           </li>
           <li>
-            <Link className="second-nav-link" to={"/books"}>Books</Link>
+            <NavLink className="second-nav-link" to={"/movies"}>Movies</NavLink>
           </li>
           <li>
-            <Link className="second-nav-link" to={"/socialmedia"}>Social Media</Link>
+            <NavLink className="second-nav-link" to={"/books"}>Books</NavLink>
           </li>
           <li>
-            <Link className="second-nav-link" to={"/celebrity"}>Celebrity</Link>
+            <NavLink className="second-nav-link" to={"/socialmedia"}>Social Media</NavLink>
+          </li>
+          <li>
+            <NavLink className="second-nav-link" to={"/celebrity"}>Celebrity</NavLink>
           </li>
         </ul>
       </ul>

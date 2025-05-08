@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { News } from '../types';
 import "./NewsDetails.css"
+import { timeElapsed } from '../functions';
 export function NewsDetails() {
   const { id } = useParams<{ id: string }>();
   const [news, setNews] = useState<News | null>(null);
@@ -31,10 +32,10 @@ export function NewsDetails() {
   return (
     <div className="news-details">
       <h2>{news.title}</h2>
-      <p>{news.description}</p>
-      <p>Category: {news.category}</p>
-      <p>Author: {news.userName}</p>
+      <p>By {news.userName}, INEWS</p>
+      <p className="NewsItemCreatedAt">{timeElapsed(news.created_at)}</p>
       <img src={news.image_url} alt="News" />
+      <p>{news.description}</p>
     </div>
   );
 }
