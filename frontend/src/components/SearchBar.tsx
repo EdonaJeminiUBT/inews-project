@@ -1,4 +1,5 @@
 import "./SearchBar.css"
+import newsimg from '../assets/newsimg.jpg';
 
 
 
@@ -18,6 +19,9 @@ export function SearchBar() {
         />
         <button className="news-search-btn">Search</button>
       </form>
+      <div className="image-container">
+        <img src={newsimg} alt="newsimg" style={{ width: '200px', height: 'auto' }} />
+      </div>
     </div>
   );
 }

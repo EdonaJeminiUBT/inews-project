@@ -1,7 +1,7 @@
 .news-posting {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  display: grid;
+  grid-auto-flow: column;
+  justify-content: space-around;
   align-items: center;
   min-height: calc(100vh - 120px);
   padding: 20px;
@@ -9,8 +9,11 @@
 }
 
 .post-h1 {
-  margin-bottom: 20px;
-  font-size: 24px;
+  font-size: 44px;
+  text-align: center;
+  color: #333;
+  font-family: 'Brush Script MT', cursive;
+  font-weight: 150;
 }
 
 .post-news {
@@ -57,4 +60,13 @@
 
 .review-btn:hover {
   background-color: #3c3a3b;
+}
+
+.success-message {
+  background-color: #4CAF50;
+  color: white;
+  border-radius: 4px;
+  padding: 10px 20px;
+  margin-bottom: 20px;
+  text-align: center;
 }

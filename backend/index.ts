@@ -154,6 +154,56 @@ app.get('/news/:id', async (req: Request, res: Response) => {
   }
 });
 
+app.get('/user-posts', authenticateJWT, async (req: AuthenticatedRequest, res: Response) => {
+  const userId = req.userId;
+
+  try {
+    const [rows] = await connection.query('SELECT * FROM news WHERE user_id = ?', [userId]);
+    res.status(200).json(rows);
+  } catch (error) {
+    console.error('Error fetching user posts:', error);
+    res.status(500).send('Internal server error');
+  }
+});
+
+app.put('/edit/news/:id', authenticateJWT, async (req: AuthenticatedRequest, res: Response) => {
+  const newsId = req.params.id;
+  const { title, description, imageUrl, category } = req.body;
+  const userId = req.userId;
+
+  try {
+    const [existingNews]: [RowDataPacket[], unknown] = await connection.query('SELECT * FROM news WHERE id = ? AND user_id = ?', [newsId, userId]);
+    if (!existingNews || existingNews.length === 0) {
+      return res.status(404).send('News not found');
+    }
+
+    await connection.query('UPDATE news SET title = ?, description = ?, image_url = ?, category = ? WHERE id = ?', [title, description, imageUrl, category, newsId]);
+
+    res.status(200).send('News updated successfully');
+  } catch (error) {
+    console.error('Error updating news:', error);
+    res.status(500).send('Internal server error');
+  }
+});
+
+app.delete('/news/:id', authenticateJWT, async (req: AuthenticatedRequest, res: Response) => {
+  const newsId = req.params.id;
+  const userId = req.userId;
+
+  try {
+    const [existingNews]: [RowDataPacket[], unknown] = await connection.query('SELECT * FROM news WHERE id = ? AND user_id = ?', [newsId, userId]);
+    if (!existingNews || existingNews.length === 0) {
+      return res.status(404).send('News not found');
+    }
+
+    await connection.query('DELETE FROM news WHERE id = ?', [newsId]);
+
+    res.status(200).send('News deleted successfully');
+  } catch (error) {
+    console.error('Error deleting news:', error);
+    res.status(500).send('Internal server error');
+  }
+});
 
 
 const PORT = process.env.PORT || 3500;

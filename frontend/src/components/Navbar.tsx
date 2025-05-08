@@ -19,7 +19,7 @@ export function Navbar({ isAuthenticated }: NavbarProps) {
     <nav className="navbar">
       <div className="navbar-container">
         <NavLink to={"/homepage"} className="navbar-logo">
-          Logo
+          INEWS
         </NavLink>
         {isAuthenticated ? (
           <ul className="navbar-items">
@@ -30,15 +30,12 @@ export function Navbar({ isAuthenticated }: NavbarProps) {
               <NavLink to="/post">Post</NavLink>
             </li>
             <li className="navbar-item">
-            <NavLink to="/profile">Profile</NavLink>
-            </li>
-            <li className="navbar-item">
               <NavLink to="/profile">
                 <BsPersonFill />
               </NavLink>
             </li>
             <li className="navbar-item">
-              <button onClick={handleSignOut}>Sign Out</button>
+              <button className="sign-out" onClick={handleSignOut}>Sign Out</button>
             </li>
           </ul>
         ) : null}

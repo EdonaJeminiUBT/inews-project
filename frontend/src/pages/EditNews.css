@@ -1,0 +1,45 @@
+.edit-news {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .edit-news h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .edit-news form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .edit-news label {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .edit-news input[type="text"],
+  .edit-news textarea,
+  .edit-news select {
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  
+  .edit-news button[type="submit"] {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .edit-news button[type="submit"]:hover {
+    background-color: #0056b3;
+  }
+  

@@ -34,15 +34,15 @@ export function HomePage() {
       <div className="NewsContainer">
         <h2 className="latest-news">Latest News</h2>
         <ul>
-  {news.reverse().map((item) => (
-    <li key={item.id} className="NewsItem">
-      <Link to={`/news/${item.id}`} className="NewsItemLink">
-        <img src={item.image_url} alt="News" className="NewsItemImage" />
+  {news.reverse().map((news) => (
+    <li key={news.id} className="NewsItem">
+      <Link to={`/news/${news.id}`} className="NewsItemLink">
+        <img src={news.image_url} alt="News" className="NewsItemImage" />
         <div className="NewsItemContent">
-          <h3 className="NewsItemTitle">{item.title}</h3>
-          <p className="NewsItemCategory">Category: {item.category}</p>
-          <p className="NewsItemCreatedAt">Created: {timeElapsed(item.created_at)}</p>
-          <p className="NewsItemUserName">Author: {item.userName}</p> 
+          <h3 className="NewsItemTitle">{news.title}</h3>
+          <p className="NewsItemCategory">Category: {news.category}</p>
+          <p className="NewsItemCreatedAt">Created: {timeElapsed(news.created_at)}</p>
+          <p className="NewsItemUserName">Author: {news.userName}</p> 
         </div>
       </Link>
     </li>
