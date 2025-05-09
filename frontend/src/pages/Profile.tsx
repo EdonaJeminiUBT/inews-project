@@ -102,7 +102,7 @@ export function Profile() {
                 <p className="post-created">Created: {timeElapsed(post.created_at)}</p>
               </Link>
               <div className='actions-button'>
-              <button className="edit-button" data-text="Edit" onClick={() => navigate(`/edit/${post.id}`)}><MdOutlineEdit /></button>
+<button className="edit-button" data-text="Edit" onClick={() => navigate(`/edit/${post.id}`)}><MdOutlineEdit /></button>
                 <button className="delete-button" data-text="Delete" onClick={() => handleDeletePost(post.id)}><MdDelete /></button>
               </div>
             </li>

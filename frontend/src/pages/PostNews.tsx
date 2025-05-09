@@ -9,21 +9,36 @@ export function PostNews() {
     description: '',
     imageUrl: '',
     category: 'movies',
-    userName: ''
+    userName: '',
+    city: '', 
+    country: ''
   });
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
-  const navigate = useNavigate()
+  const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:3500/post', {
+      let url = 'http://localhost:3500/post';
+      let body: any = formData; 
+
+      if (formData.category === 'weather') {
+        url = 'http://localhost:3500/weather';
+        body = {
+          city: formData.city,
+          country: formData.country
+        };
+      }
+
+      const response = await fetch(url, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(body)
       });
 
       if (response.ok) {
@@ -32,7 +47,9 @@ export function PostNews() {
           description: '',
           imageUrl: '',
           category: 'movies',
-          userName: ''
+          userName: '',
+          city: '', 
+          country: ''
         });
         setSuccessMessage('News created successfully!');
         setTimeout(() => {
@@ -43,6 +60,7 @@ export function PostNews() {
         throw new Error('Failed to create news');
       }
     } catch (error) {
+      setError('Error creating news');
       console.error('Error creating news:', error);
     }
   };
@@ -57,30 +75,7 @@ export function PostNews() {
       <form className="post-news" onSubmit={handleSubmit}>
         <h1 className="post-h1">Post News Here!</h1>
         {successMessage && <p className="success-message">{successMessage}</p>}
-        <input
-          type="text"
-          name="title"
-          value={formData.title}
-          onChange={handleChange}
-          placeholder="Title"
-          required
-        />
-        <textarea
-          name="description"
-          value={formData.description}
-          onChange={handleChange}
-          placeholder="Write your news here..."
-          rows={7}
-          required
-        />
-        <input
-          type="url"
-          name="imageUrl"
-          value={formData.imageUrl}
-          onChange={handleChange}
-          placeholder="Image URL"
-          required
-        />
+        {error && <p className="error-message">{error}</p>}
         <select
           name="category"
           value={formData.category}
@@ -95,6 +90,54 @@ export function PostNews() {
           <option value="social_media">Social Media</option>
           <option value="weather">Weather</option>
         </select>
+        {formData.category === 'weather' && (
+          <div>
+            <input
+              type="text"
+              name="city"
+              value={formData.city}
+              onChange={handleChange}
+              placeholder="City"
+              required
+            />
+            <input
+              type="text"
+              name="country"
+              value={formData.country}
+              onChange={handleChange}
+              placeholder="Country"
+              required
+            />
+          </div>
+        )}
+        {formData.category !== 'weather' && (
+          <div>
+            <input
+              type="text"
+              name="title"
+              value={formData.title}
+              onChange={handleChange}
+              placeholder="Title"
+              required
+            />
+            <textarea
+              name="description"
+              value={formData.description}
+              onChange={handleChange}
+              placeholder="Write your news here..."
+              rows={7}
+              required
+            />
+            <input
+              type="url"
+              name="imageUrl"
+              value={formData.imageUrl}
+              onChange={handleChange}
+              placeholder="Image URL"
+              required
+            />
+          </div>
+        )}
         <button type="submit" className="review-btn">
           POST
         </button>
@@ -102,7 +145,6 @@ export function PostNews() {
       <div className="image-container">
         <img src={figure} alt="post-here" style={{ width: '400px', height: 'auto' }} />
       </div>
-
     </div>
   );
 }

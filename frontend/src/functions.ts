@@ -33,3 +33,7 @@ export function timeElapsed(time: string){
       else return `${years} years ago`;
     }
   }
+
+  export const convertKelvinToCelsius = (kelvin: any) => {
+    return Math.round(kelvin - 273.15);
+  };
