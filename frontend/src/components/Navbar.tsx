@@ -1,6 +1,7 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { BsPersonFill } from "react-icons/bs";
 import "./Navbar.css";
+import { FaSignOutAlt } from "react-icons/fa";
 
 interface NavbarProps {
   isAuthenticated: boolean;
@@ -35,7 +36,9 @@ export function Navbar({ isAuthenticated }: NavbarProps) {
               </NavLink>
             </li>
             <li className="navbar-item">
-              <button className="sign-out" onClick={handleSignOut}>Sign Out</button>
+              <button className="sign-out" onClick={handleSignOut}><FaSignOutAlt />
+
+</button>
             </li>
           </ul>
         ) : null}
