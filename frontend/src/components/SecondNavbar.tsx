@@ -5,7 +5,6 @@ export function SecondNavbar() {
   return (
     <nav className="second-navbar">
 
-      <div className="categories-header">Choose your favorite category</div>
       <ul className="categories">
         <ul className="categories-items">
         <li>

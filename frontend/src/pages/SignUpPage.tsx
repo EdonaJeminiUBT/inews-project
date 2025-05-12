@@ -50,16 +50,17 @@ export const SignUpPage: React.FC = () => {
   
   
   return (
+    <div className='signup-page'>
     <div className="signup-container">
       <h2 className="title">Sign Up</h2>
       {error && <p className="error-message">{error}</p>}
       <form className="form" onSubmit={handleSubmit}>
         <div className="form-group">
-          <label htmlFor="name" className="label">Name:</label>
           <input
             type="text"
             id="name"
             name="name"
+            placeholder='Name'
             value={formData.name}
             onChange={handleChange}
             className="input"
@@ -67,11 +68,11 @@ export const SignUpPage: React.FC = () => {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="email" className="label">Email:</label>
           <input
             type="email"
             id="email"
             name="email"
+            placeholder='Email'
             value={formData.email}
             onChange={handleChange}
             className="input"
@@ -79,11 +80,11 @@ export const SignUpPage: React.FC = () => {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="password" className="label">Password:</label>
           <input
             type="password"
             id="password"
             name="password"
+            placeholder='Password'
             value={formData.password}
             onChange={handleChange}
             className="input"
@@ -93,6 +94,7 @@ export const SignUpPage: React.FC = () => {
         <button type="submit" className="signup-btn">Sign Up</button>
       </form>
       <p className="signin-link">Already have an account? <Link to="/signin">Sign in here</Link></p>
+    </div>
     </div>
   );
 };

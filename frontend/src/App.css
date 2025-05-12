@@ -49,3 +49,13 @@ a {
   font-family: 'Brush Script MT', cursive;
   font-weight: 150;
 }
+
+.social-media ul{
+  display: inline-flex;
+  text-decoration: none;
+  list-style: none;
+  gap: 10px;
+}
+.social-media li{
+  font-size: 26px;
+}

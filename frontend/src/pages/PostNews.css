@@ -1,40 +1,47 @@
 .news-posting {
   display: grid;
   grid-auto-flow: column;
-  justify-content: s;
+  justify-content: space-around;
   align-items: center;
   min-height: calc(100vh - 120px);
-  padding: 20px;
   box-sizing: border-box;
+
 }
 
 .post-h1 {
   font-size: 44px;
   text-align: center;
-  color: #333;
+  color: white;
   font-family: 'Brush Script MT', cursive;
   font-weight: 150;
 }
 
 .post-news {
+  background-image: url('../assets/news.avif');
+  background-size: cover;
+  background-position: center;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 25px;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
   width: 100%;
   max-width: 400px;
   padding: 40px;
-  background-color: #ffffff;
-  border-radius: 10px;
-  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  margin:30px 0;
 }
 
 .post-news input[type="text"],
 .post-news input[type="url"],
 .post-news textarea,
 .post-news select {
-  width: 100%;
+  width: 350px;
   margin-bottom: 20px;
   padding: 15px;
   border: 1px solid #e0e0e0;
-  border-radius: 5px;
+  border-radius: 25px;
   font-size: 16px;
+  justify-self: center;
 }
 
 .post-news textarea {
@@ -47,20 +54,19 @@
 }
 
 .review-btn {
-  width: 100%;
+  width: 200px;
+  align-self: center;
   padding: 15px;
-  background-color: #231f20;
+  background-color: transparent;
   color: #ffffff;
   border: none;
   border-radius: 5px;
-  font-size: 16px;
+  font-size: 46px;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
-.review-btn:hover {
-  background-color: #3c3a3b;
-}
+
 
 .success-message {
   background-color: #4CAF50;
