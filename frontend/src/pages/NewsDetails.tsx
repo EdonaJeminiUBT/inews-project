@@ -35,6 +35,7 @@ export function NewsDetails() {
       <p>By {news.userName}, INEWS</p>
       <p className="NewsItemCreatedAt">{timeElapsed(news.created_at)}</p>
       <img src={news.image_url} alt="News" />
+      <h2>{news.title}</h2>
       <p>{news.description}</p>
     </div>
   );

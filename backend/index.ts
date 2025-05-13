@@ -21,7 +21,7 @@ interface AuthenticatedRequest extends Request {
   userId?: number;
 }
 
-export function authenticateJWT(req: AuthenticatedRequest, res: Response, next: NextFunction) {
+export function validate(req: AuthenticatedRequest, res: Response, next: NextFunction) {
   const token = req.headers.authorization?.split(' ')[1]; 
   if (token) {
     jwt.verify(token, 'secret', (err, decoded: JwtPayload | undefined) => {
@@ -100,7 +100,7 @@ app.post('/signin', async (req: Request, res: Response) => {
   }
 });
 
-app.get('/user-details', authenticateJWT, async (req: AuthenticatedRequest, res: Response) => {
+app.get('/user-details', validate, async (req: AuthenticatedRequest, res: Response) => {
   try {
     const userId = req.userId;
     const [rows] = await connection.query('SELECT name, email FROM users WHERE id = ?', [userId]);
@@ -117,7 +117,7 @@ app.get('/user-details', authenticateJWT, async (req: AuthenticatedRequest, res:
   }
 });
 
-app.post('/post', authenticateJWT, async (req: AuthenticatedRequest, res: Response) => {
+app.post('/post', validate, async (req: AuthenticatedRequest, res: Response) => {
   const { title, description, imageUrl, category } = req.body;
   const userId = req.userId;
 
@@ -158,7 +158,7 @@ app.get('/news/:id', async (req: Request, res: Response) => {
   }
 });
 
-app.get('/user-posts', authenticateJWT, async (req: AuthenticatedRequest, res: Response) => {
+app.get('/user-posts', validate, async (req: AuthenticatedRequest, res: Response) => {
   const userId = req.userId;
 
   try {
@@ -170,7 +170,7 @@ app.get('/user-posts', authenticateJWT, async (req: AuthenticatedRequest, res: R
   }
 });
 
-app.put('/edit/news/:id', authenticateJWT, async (req: AuthenticatedRequest, res: Response) => {
+app.put('/edit/news/:id', validate, async (req: AuthenticatedRequest, res: Response) => {
   const newsId = req.params.id;
   const { title, description, imageUrl, category } = req.body;
   const userId = req.userId;
@@ -190,7 +190,7 @@ app.put('/edit/news/:id', authenticateJWT, async (req: AuthenticatedRequest, res
   }
 });
 
-app.delete('/news/:id', authenticateJWT, async (req: AuthenticatedRequest, res: Response) => {
+app.delete('/news/:id', validate, async (req: AuthenticatedRequest, res: Response) => {
   const newsId = req.params.id;
   const userId = req.userId;
 
@@ -262,7 +262,7 @@ app.get('/weather-news', async (req, res) => {
   }
 });
 
-app.get('/user-weather-news', authenticateJWT, async (req: AuthenticatedRequest, res: Response) => {
+app.get('/user-weather-news', validate, async (req: AuthenticatedRequest, res: Response) => {
   const userId = req.userId;
 
   try {
